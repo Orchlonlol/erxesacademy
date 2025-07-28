@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let user = null;
+      user = {
+        name: "Alice",
+        age: 25,
+        email: "dfs",
+        address: "gd",
+      };
+      console.log(user);
+
+      let session = {
+        id: 12345,
+        isActive: false,
+      };
+      session = null;
+      let colors = ["red", "blue", "green", "yellow", "purple"];
+      let fruits = ["apple", "banana", "orange", "grape", "watermelon"];
+      let cars = ["Toyota", "BMW", "Tesla", "Ford", "Hyundai"];
+      let greeting = {
+        firstName: "Enkh",
+        lastName: "Orchlon",
+        email: "orchlon@example.com",
+        hobby: "playing games",
+        gender: "male",
+      };
+      function isEven(a) {
+        if (a % 2 === 0) {
+          console.log("even");
+          return true;
+        } else {
+          console.log("odd");
+          return false;
+        }
+      };
+      isEven(4);
+      isEven(7);
+      function divider(a, b) {
+        let noogdvor = Math.floor(a / b);
+        let uldegdel = a % b;
+
+        console.log("Ноогдвор:", noogdvor);
+        console.log("Үлдэгдэл:", uldegdel);
+
+        if (b === 0) {
+          console.log("0-d huvaaj bolohgui");
+          return;
+        }
+      };
+      function highestNumber(a, b) {
+        if (a > b) {
+          console.log("Их тоо:", a);
+        } else if (b > a) {
+          console.log("Их тоо:", b);
+        } else {
+          console.log("Хоёр тоо тэнцүү байна:", a);
+        }
+        highestNumber(10, 5);
+        highestNumber(7, 20);
+        highestNumber(8, 8);
+      };
+      function isLeapYear(a) {
+  if ((a % 4 === 0 && a % 100 !== 0) || (a % 400 === 0)) {
+    console.log(a + " on bol undur jil mun.");
+  } else {
+    console.log(a + " on bol under jil bish.");
+  }
+  isLeapYear(2020); // 2020 on bol undur jil mun
+isLeapYear(1900); // 1900 bol undur jil bish.
+isLeapYear(2000); // 2000 bol undur jil mun.
+};
+function highestNumber2(a, b, c) {
+  console.log("hamgiin ih too", Math.max(a, b, c));
+}
+const calcCircle = r => Math.PI * r * r;
+console.log(calcCircle(5)); // ≈ 78.54
+
+
+function countStudentsByHeight(h1, h2, h3, h4, h5, h6) {
+  const heights = [h1, h2, h3, h4, h5, h6];
+  const avg = heights.reduce((a, b) => a + b) / heights.length;
+
+  let row1 = 0, row2 = 0, row3 = 0;
+
+  heights.forEach(h => {
+    if (h < avg) row1++;
+    else if (h === avg) row2++;
+    else row3++;
+  });
+
+  console.log("1-р egnee (namhan)):", row1);
+  console.log("2-р egnee (dundaj):", row2);
+  console.log("3-р egnee (undur):", row3);
+
+};
+    </script>
+  </body>
+</html>
