@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const animals = ["Lion", "Tiger", "Elephant", "Giraffe"];
+      animals[2] = "Panda";
+      console.log(animals); // ["Lion", "Tiger", "Panda", "Giraffe"];
+      const books = ["1984", "Brave New World", "Fahrenheit 451"];
+      books[4] = "Harry potter";
+      books[5] = "The name of the wind";
+      console.log(books); // ["1984", "Brave New World", "Fahrenheit 451", "Harry poter", "The name of the wind"];
+      const numbers = [10, 20, 30, 40, 50];
+      numbers.find((number, index) => {
+        if (number === 30) {
+          console.log(index);
+        }
+      });
+      const too = [10, 20, 30, 40, 50];
+      numbers.find((number, index) => {
+        if (number === 50 ) {
+          console.log(index);
+        }
+      });
+      const fruit = ["fruits1", "fruits2", "fruits3"
+         
+      ]
+    </script>
+  </body>
+</html>

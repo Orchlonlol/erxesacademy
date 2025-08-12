@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aim Lab</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      padding-top: 20px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+    #scoreboard, #timer {
+      margin: 10px;
+      font-size: 20px;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(10, 50px);
+      gap: 2px;
+    }
+    .box {
+      width: 50px;
+      height: 50px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .dot {
+      background-color: red;
+      transition: background-color 0.2s;
+    }
+    #game-over {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      display: none;
+    }
+    #restartBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 Aim Lab</h1>
+  <div id="scoreboard">Оноо: 0</div>
+  <div id="timer">Үлдсэн хугацаа: 30 секунд</div>
+  <div class="container"></div>
+  <div id="game-over"></div>
+  <button id="restartBtn">🔄 Дахин эхлэх</button>
+
+  <script>
+    const square = 100;
+    const boxes = [];
+    const container = document.querySelector(".container");
+    const scoreDisplay = document.getElementById("scoreboard");
+    const timerDisplay = document.getElementById("timer");
+    const gameOverDisplay = document.getElementById("game-over");
+    const restartBtn = document.getElementById("restartBtn");
+
+    let dotIndex, clickedIndex, score = 0, timeLeft = 30;
+    let gameTimer, dotTimer, autoMoveTimer;
+    let gameActive = true;
+
+    function createGrid() {
+      container.innerHTML = '';
+      boxes.length = 0;
+      for (let i = 0; i < square; i++) {
+        const box = document.createElement("div");
+        box.classList.add("box");
+        box.onclick = () => {
+          if (!gameActive) return;
+          clickedIndex = i;
+          if (clickedIndex === dotIndex) {
+            score++;
+            updateScore();
+            moveDot();
+          }
+        };
+        boxes.push(box);
+        container.appendChild(box);
+      }
+    }
+
+    function updateScore() {
+      scoreDisplay.textContent = "Оноо: " + score;
+    }
+
+    function updateTimer() {
+      timerDisplay.textContent = "Үлдсэн хугацаа: " + timeLeft + " секунд";
+    }
+
+    function moveDot() {
+      if (dotIndex !== undefined) {
+        boxes[dotIndex].classList.remove("dot");
+      }
+
+      dotIndex = Math.floor(Math.random() * square);
+      boxes[dotIndex].classList.add("dot");
+
+      // Dot автомат хөдөлгөөн 1 сек-д
+      clearTimeout(autoMoveTimer);
+      autoMoveTimer = setTimeout(() => {
+        if (!gameActive) return;
+        boxes[dotIndex].classList.remove("dot");
+        score--; // Хэрвээ дарж амжаагүй бол оноо хасна
+        updateScore();
+        moveDot();
+      }, 1000);
+    }
+
+    function startTimer() {
+      gameTimer = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+    }
+
+    function endGame() {
+      gameActive = false;
+      clearInterval(gameTimer);
+      clearTimeout(autoMoveTimer);
+      boxes[dotIndex]?.classList.remove("dot");
+
+      let medal = '';
+      if (score >= 20) medal = '🥇 Алт';
+      else if (score >= 10) medal = '🥈 Мөнгө';
+      else if (score >= 5) medal = '🥉 Хүрэл';
+      else medal = '⚪ Медаль байхгүй';
+
+      gameOverDisplay.textContent = `Тоглоом дууслаа! Таны оноо: ${score} — ${medal}`;
+      gameOverDisplay.style.display = 'block';
+      restartBtn.style.display = 'inline-block';
+    }
+
+    function restartGame() {
+      score = 0;
+      timeLeft = 30;
+      updateScore();
+      updateTimer();
+      gameOverDisplay.style.display = 'none';
+      restartBtn.style.display = 'none';
+      gameActive = true;
+      createGrid();
+      moveDot();
+      startTimer();
+    }
+
+    restartBtn.onclick = restartGame;
+
+    // Start game initially
+    restartGame();
+  </script>
+</body>
+</html>
