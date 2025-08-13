@@ -1,77 +1,405 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="mn">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mini-Netflix — Demo</title>
-  <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
-    html,body { height:100%; background:#050505; color:#e6e6e6; font-family: Inter, Arial, sans-serif; }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mini-Netflix</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        background: #050505;
+        color: #e6e6e6;
+        font-family: Inter, Arial, sans-serif;
+      }
 
-    header {
-      position:sticky; top:0; z-index:50;
-      background: linear-gradient(180deg, rgba(5,5,5,0.95), rgba(5,5,5,0.6));
-      padding:14px 28px; display:flex; align-items:center; gap:20px;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .logo { color:#e50914; font-weight:800; font-size:20px; }
-    .nav { display:flex; gap:12px; align-items:center; }
-    .nav a { color:#ddd; text-decoration:none; font-size:14px; padding:6px 8px; border-radius:4px; }
-    .nav a:hover { background: rgba(255,255,255,0.03); }
-    .spacer { flex:1; }
-    .controls { display:flex; gap:10px; align-items:center; }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: linear-gradient(
+          180deg,
+          rgba(5, 5, 5, 0.95),
+          rgba(5, 5, 5, 0.6)
+        );
+        padding: 14px 28px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .logo {
+        color: #e50914;
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .nav {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .nav a {
+        color: #ddd;
+        text-decoration: none;
+        font-size: 14px;
+        padding: 6px 8px;
+        border-radius: 4px;
+      }
+      .nav a:hover {
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .spacer {
+        flex: 1;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
 
-    .hero {
-      padding:28px; display:flex; gap:22px; align-items:flex-end;
-      background-image: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.6));
-    }
-    .hero-poster { width:220px; height:130px; border-radius:6px; overflow:hidden; background:#222; flex-shrink:0; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
-    .hero-info { color:#fff; }
-    .hero-title { font-size:26px; font-weight:700; margin-bottom:6px; }
-    .hero-desc { max-width:720px; color:#cfcfcf; font-size:14px; line-height:1.45; }
+      .hero {
+        padding: 28px;
+        display: flex;
+        gap: 22px;
+        align-items: flex-end;
+        background-image: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0),
+          rgba(0, 0, 0, 0.6)
+        );
+      }
+      .hero-poster {
+        width: 220px;
+        height: 130px;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #222;
+        flex-shrink: 0;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      }
+      .hero-info {
+        color: #fff;
+      }
+      .hero-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .hero-desc {
+        max-width: 720px;
+        color: #cfcfcf;
+        font-size: 14px;
+        line-height: 1.45;
+      }
 
-    .row { padding:18px 24px; }
-    .row-title { font-weight:700; font-size:16px; margin:6px 0 12px 6px; color:#fff; }
-    .carousel {
-      display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; scrollbar-width:thin;
-    }
-    .card {
-      min-width:170px; width:170px; height:96px; border-radius:6px; background:#111; overflow:hidden;
-      position:relative; flex:0 0 auto; cursor:pointer; transition: transform .18s ease, box-shadow .18s;
-    }
-    .card img { width:100%; height:100%; object-fit:cover; display:block; }
-    .card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 8px 30px rgba(0,0,0,0.7); }
-    .card .badge {
-      position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.6); padding:4px 6px; font-size:12px; border-radius:4px;
-    }
+      .row {
+        padding: 18px 24px;
+      }
+      .row-title {
+        font-weight: 700;
+        font-size: 16px;
+        margin: 6px 0 12px 6px;
+        color: #fff;
+      }
+      .carousel {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        scrollbar-width: thin;
+      }
+      .card {
+        min-width: 170px;
+        width: 170px;
+        height: 96px;
+        border-radius: 6px;
+        background: #111;
+        overflow: hidden;
+        position: relative;
+        flex: 0 0 auto;
+        cursor: pointer;
+        transition: transform 0.18s ease, box-shadow 0.18s;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      }
+      .card .badge {
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 4px 6px;
+        font-size: 12px;
+        border-radius: 4px;
+      }
 
-    footer { padding:30px 24px; color:#9b9b9b; font-size:13px; border-top:1px solid rgba(255,255,255,0.03); }
+      footer {
+        padding: 30px 24px;
+        color: #9b9b9b;
+        font-size: 13px;
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+      }
 
-    .loading { padding:40px; text-align:center; color:#bdbdbd; }
-    .error { padding:24px; color:#ffb4b4; background: rgba(255,0,0,0.03); border-radius:6px; }
+      .loading {
+        padding: 40px;
+        text-align: center;
+        color: #bdbdbd;
+      }
+      .error {
+        padding: 24px;
+        color: #ffb4b4;
+        background: rgba(255, 0, 0, 0.03);
+        border-radius: 6px;
+      }
 
-    @media (max-width:720px) {
-      .hero { flex-direction:column; align-items:flex-start; gap:12px; padding:16px; }
-      .hero-poster { width:120px; height:72px; }
-      .card { min-width:120px; width:120px; height:72px; }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">NETFLIX</div>
-    <nav class="nav">
-      <a href="#">Home</a>
-      <a href="#">Series</a>
-      <a href="#">Movies</a>
-      <a href="#">Latest</a>
-      <a href="#">My List</a>
-    </nav>
-    <div class="spacer"></div>
-    <div class="controls">
-      <input id="search" placeholder="Хайх..." style="background:#111;border:1px solid rgba(255,255,255,0.03); color:#ddd; padding:6px 10px; border-radius:6px;"/>
-      <button id="refreshBtn" style="background:transparent;border:none;color:#ddd;cursor:pointer">⟲</button>
-    </div>
-  </header>
+      @media (max-width: 720px) {
+        .hero {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          padding: 16px;
+        }
+        .hero-poster {
+          width: 120px;
+          height: 72px;
+        }
+        .card {
+            min-width: 120px;
+          width: 120px;
+          height: 72px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">NETFLIX</div>
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">Series</a>
+        <a href="#">Movies</a>
+        <a href="#">Latest</a>
+        <a href="#">My List</a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="controls">
+        <input
+          id="search"
+          placeholder="Хайх..."
+          style="
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            color: #ddd;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        />
+        <button
+          id="refreshBtn"
+          style="
+            background: transparent;
+            border: none;
+            color: #ddd;
+            cursor: pointer;
+          "
+        >
+          ⟲
+        </button>
+      </div>
+    </header>
 
-  
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-poster">
+          <img
+            src=""
+            alt=""
+            style="width: 100%; height: 100%; object-fit: cover; display: block"
+          />
+        </div>
+        <div class="hero-info">
+          <div class="hero-title"></div>
+          <div class="hero-desc"></div>
+        </div>
+      </section>
+
+      <div id="content"></div>
+      <div id="status" class="loading">loading...</div>
+    </main>
+
+    <footer>© 2025 — Demo Netflix UI</footer>
+
+    <script>
+      const API_URL = "./movies.json"; // husvel uur API holbono
+
+      const FALLBACK = [
+        {
+          title: "Romantic series",
+          items: [
+            {
+              id: 1,
+              title: "Our Generation",
+              poster: "https://via.placeholder.com/300x180?text=Our+Generation",
+              desc: "Romantic drama from Korea.",
+            },
+            {
+              id: 2,
+              title: "I Love You",
+              poster: "https://via.placeholder.com/300x180?text=I+Love+You",
+              desc: "Love story.",
+            },
+            {
+              id: 3,
+              title: "Prisoner Beauty",
+              poster:
+                "https://via.placeholder.com/300x180?text=Prisoner+Beauty",
+              desc: "Suspense & romance.",
+            },
+          ],
+        },
+        {
+          title: "Quirky and quirky/Asian/ TV shows",
+          items: [
+            {
+              id: 11,
+              title: "Weird Chef",
+              poster: "https://via.placeholder.com/300x180?text=Weird+Chef",
+              desc: "Cooking show.",
+            },
+            {
+              id: 12,
+              title: "Detective",
+              poster: "https://via.placeholder.com/300x180?text=Detective",
+              desc: "Mystery.",
+            },
+            {
+              id: 13,
+              title: "Flower Clinic",
+              poster: "https://via.placeholder.com/300x180?text=Flower+Clinic",
+              desc: "Drama.",
+            },
+          ],
+        },
+        {
+          title: "Only on Netflix",
+          items: [
+            {
+              id: 21,
+              title: "Dark Case",
+              poster: "https://via.placeholder.com/300x180?text=Dark+Case",
+              desc: "Exclusive thriller.",
+            },
+            {
+              id: 22,
+              title: "Heist",
+              poster: "https://via.placeholder.com/300x180?text=Heist",
+              desc: "Crime.",
+            },
+          ],
+        },
+      ];
+
+      const content = document.getElementById("content");
+      const status = document.getElementById("status");
+      const heroImg = document.querySelector(".hero-poster img");
+      const heroTitle = document.querySelector(".hero-title");
+      const heroDesc = document.querySelector(".hero-desc");
+      const searchInput = document.getElementById("search");
+      const refreshBtn = document.getElementById("refreshBtn");
+
+      function setLoading(show, msg = "loading...") {
+        status.style.display = show ? "block" : "none";
+        status.textContent = msg;
+      }
+      function renderRows(cats) {
+        content.innerHTML = "";
+        if (!cats.length) {
+          content.innerHTML = '<div class="error">ugugdul alga</div>';
+          return;
+        }
+        // hero update
+        heroImg.src = cats[0].items[0].poster;
+        heroTitle.textContent = cats[0].items[0].title;
+        heroDesc.textContent = cats[0].items[0].desc;
+        cats.forEach((cat) => {
+          const row = document.createElement("section");
+          row.className = "row";
+          const title = document.createElement("div");
+          title.className = "row-title";
+          title.textContent = cat.title;
+          row.appendChild(title);
+
+          const carousel = document.createElement("div");
+          carousel.className = "carousel";
+
+          cat.items.map((item) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            const img = document.createElement("img");
+            img.src = item.poster;
+            img.alt = item.title;
+            card.appendChild(img);
+
+            const badge = document.createElement("div");
+            badge.className = "badge";
+            badge.textContent = item.title;
+            card.appendChild(badge);
+
+            carousel.appendChild(card);
+          });
+
+          row.appendChild(carousel);
+          content.appendChild(row);
+        });
+      }
+
+      async function loadData() {
+        setLoading(true);
+        try {
+          const res = await fetch(API_URL);
+          if (!res.ok) throw new Error("API aldaa");
+          const data = await res.json();
+          renderRows(data);
+        } catch (err) {
+          console.warn("API ajillahgui baina, fallback ashigllaa");
+          renderRows(FALLBACK);
+        }
+        setLoading(false);
+      }
+
+      refreshBtn.onclick = loadData;
+      searchInput.oninput = (e) => {
+        const q = e.target.value.toLowerCase();
+        document.querySelectorAll(".row").forEach((row) => {
+          let match = false;
+          row.querySelectorAll(".card").forEach((card) => {
+            const title = card
+              .querySelector(".badge")
+              .textContent.toLowerCase();
+            if (title.includes(q)) {
+              card.style.display = "";
+              match = true;
+            } else {
+              card.style.display = "none";
+            }
+          });
+          row.style.display = match ? "" : "none";
+        });
+      };
+
+      loadData();
+    </script>
+  </body>
+</html>

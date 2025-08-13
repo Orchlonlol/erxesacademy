@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mini Netflix – Carousel with Arrows</title>
+<style>
+  :root{
+    --bg:#141414;
+    --fg:#fff;
+    --muted:#bdbdbd;
+    --card:#1a1a1a;
+  }
+  *{box-sizing:border-box}
+  body {
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:var(--bg);
+    color:var(--fg);
+  }
+  header{
+    position:sticky; top:0; z-index:10;
+    padding:16px 28px;
+    display:flex; align-items:center; gap:24px;
+    background:linear-gradient(to bottom, rgba(0,0,0,.9), transparent);
+  }
+  header h1{color:#e50914; margin:0}
+  header nav a{color:#fff; text-decoration:none; margin-right:16px}
+
+  /* Row (category) wrapper — positions the arrow buttons */
+  .row{
+    position:relative;
+    padding:10px 48px; /* space for arrows */
+    margin-top:6px;
+  }
+  .row h2{margin:12px 0 8px 6px; font-size:18px}
+
+  /* Horizontal scroller */
+  .movies{
+    display:flex; gap:14px;
+    overflow-x:auto; scroll-behavior:smooth;
+    padding:10px 0 16px;
+  }
+  .movies::-webkit-scrollbar{height:8px}
+  .movies::-webkit-scrollbar-thumb{background:#444; border-radius:4px}
+
+  .movie{
+    min-width:190px; flex-shrink:0; text-align:center;
+  }
+  .movie .poster{
+    width:100%; height:285px; border-radius:8px;
+    object-fit:cover; background:#222;
+    transition:transform .25s ease;
+    display:block;
+  }
+  .movie .poster:hover{transform:scale(1.05)}
+  .movie a{
+    display:block; text-decoration:none; color:var(--muted);
+    margin-top:8px; font-size:14px;
+  }
+  .movie a:hover{color:#fff}
+
+  /* Arrow buttons */
+  .scroll-btn{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:38px; height:70px;
+    border:none; border-radius:6px;
+    background:rgba(0,0,0,.55);
+    color:#fff; font-size:22px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    backdrop-filter: blur(2px);
+    z-index:5;
+  }
+  .scroll-btn:hover{background:rgba(0,0,0,.8)}
+  .scroll-left{left:8px}
+  .scroll-right{right:8px}
+
+  /* Optional: fade edges like Netflix */
+  .row::before,.row::after{
+    content:""; position:absolute; top:0; bottom:0; width:40px; pointer-events:none;
+  }
+  .row::before{left:0; background:linear-gradient(to right, var(--bg), transparent)}
+  .row::after{right:0; background:linear-gradient(to left, var(--bg), transparent)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>NETFLIX</h1>
+  <nav>
+    <a href="#">Home</a><a href="#">Series</a><a href="#">Movies</a>
+    <a href="#">Latest</a><a href="#">My List</a>
+  </nav>
+</header>
+
+<!-- 1-р мөр (чи дангаараа хэрэглэж болно) -->
+<section class="row">
+  <h2>Ghibli Picks</h2>
+  <button class="scroll-btn scroll-left" aria-label="Scroll left">‹</button>
+  <button class="scroll-btn scroll-right" aria-label="Scroll right">›</button>
+
+  <div class="movies">
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/0/0b/Grave_of_the_Fireflies_Japanese_poster.jpg"
+        alt="Grave of the Fireflies"></a>
+      <a href="#">Grave of the Fireflies</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/0/0d/My_Neighbor_Totoro_-_Tonari_no_Totoro_%28Movie%29.jpg"
+        alt="My Neighbor Totoro"></a>
+      <a href="#">My Neighbor Totoro</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/0/0f/Kiki%27s_Delivery_Service_poster.jpg"
+        alt="Kiki's Delivery Service"></a>
+      <a href="#">Kiki's Delivery Service</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/c/c6/Princess_Mononoke_Japanese_poster.png"
+        alt="Princess Mononoke"></a>
+      <a href="#">Princess Mononoke</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.png"
+        alt="Spirited Away"></a>
+      <a href="#">Spirited Away</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/a/a3/The_Cat_Returns.jpg"
+        alt="The Cat Returns"></a>
+      <a href="#">The Cat Returns</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/7/7e/Howls-moving-castleposter.jpg"
+        alt="Howl's Moving Castle"></a>
+      <a href="#">Howl's Moving Castle</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/7/7b/From_Up_on_Poppy_Hill.png"
+        alt="From Up on Poppy Hill"></a>
+      <a href="#">From Up on Poppy Hill</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/en/a/a3/The_Wind_Rises.png"
+        alt="The Wind Rises"></a>
+      <a href="#">The Wind Rises</a>
+    </div>
+  </div>
+</section>
+
+<!-- Жишээ болгож 2-р мөр нэмлээ — яг адил сумтай ажиллана.
+     Хэрэв нэг мөрөөр л хэрэглэх бол энэ хэсгийг устгачих. -->
+<section class="row">
+  <h2>Only on Netflix</h2>
+  <button class="scroll-btn scroll-left" aria-label="Scroll left">‹</button>
+  <button class="scroll-btn scroll-right" aria-label="Scroll right">›</button>
+
+  <div class="movies">
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://m.media-amazon.com/images/M/MV5BNmJl.jpg"
+        alt="Dark Case"></a>
+      <a href="#">Dark Case</a>
+    </div>
+    <div class="movie">
+      <a href="#"><img class="poster" loading="lazy"
+        src="https://m.media-amazon.com/images/M/MV5BZjcx.jpg"
+        alt="Heist"></a>
+      <a href="#">Heist</a>
+    </div>
+    <!-- Дуртайгаа нэмээд явна -->
+  </div>
+</section>
+
+<script>
+  // Row бүр дээр зүүн/баруун дархад тухайн мөр нь гүйлгэнэ
+  document.querySelectorAll('.row').forEach(row => {
+    const scroller = row.querySelector('.movies');
+    const leftBtn  = row.querySelector('.scroll-left');
+    const rightBtn = row.querySelector('.scroll-right');
+
+    const step = () => Math.round(scroller.clientWidth * 0.9);
+
+    leftBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    rightBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left:  step(), behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
