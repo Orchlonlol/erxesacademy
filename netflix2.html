@@ -224,7 +224,7 @@ Movie site example
           id="refreshBtn"
           style="
             background: transparent;
-            border: none;
+                border: none;
             color: #ddd;
             cursor: pointer;
           "></button>
@@ -247,7 +247,7 @@ Movie site example
         .then((data) => {
           console.log(data);
           const movies = data;
-          movies.map((movie) => {
+          movies.map((movie) => {  
             const list = document.createElement("div");
             list.classList.add("movieContainer");
 
@@ -264,4 +264,3 @@ Movie site example
     getMovies();
   </script>
 </html>
-```
